@@ -24,6 +24,9 @@ def pyramid_word():
     _word = request.get_json()["word"]
     if type(_word) is not str:
         raise BadRequest('Invalid data type', 400, {"received_data_type": type(_word).__name__, "valid_data_type": 'str'})
+
+    if len(_word) == 0:
+        return jsonify({'result': False}), 200
     char_freq = list(Counter(_word).values())
     char_freq.sort()
     for i in range(len(char_freq)):
